@@ -12,15 +12,18 @@ public class PlayerController : MonoBehaviour
     private Animator anim; 
 
     private bool playerMoving;
-    private Vector2 lastMove;
-    
-    
+    public Vector2 lastMove;
+
+    private static bool playerExists;
+
     // Start is called before the first frame update
     void Start()
     {
         anim = GetComponent<Animator>(); // first time the scene starts
         myRigidbody = GetComponent<Rigidbody2D>();
         myRigidbody.freezeRotation = true;
+
+
     }
 
     // Update is called once per frame

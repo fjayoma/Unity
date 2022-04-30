@@ -7,5 +7,8 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/Scenes/main.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
+    guid: af38e85c202855f4aa017d4b3f7837da
+  - enabled: 1
+    path: Assets/Scenes/House_Interior.unity
+    guid: 28bfeb3b037e87148a20fd302cae7901
   m_configObjects: {}
