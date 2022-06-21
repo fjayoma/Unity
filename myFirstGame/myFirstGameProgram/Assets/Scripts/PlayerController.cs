@@ -15,6 +15,10 @@ public class PlayerController : MonoBehaviour
     public Vector2 lastMove;
 
     private static bool playerExists;
+    
+    private bool attacking; 
+    public float attackTime;
+    private float attackTimeCounter;
 
     // Start is called before the first frame update
     void Start()
@@ -22,14 +26,16 @@ public class PlayerController : MonoBehaviour
         anim = GetComponent<Animator>(); // first time the scene starts
         myRigidbody = GetComponent<Rigidbody2D>();
         myRigidbody.freezeRotation = true;
-
-
     }
 
     // Update is called once per frame
-    void Update(){
+    void Update()
+        {
 
         playerMoving = false;
+
+        if(!attacking)
+            {
 
         if(Input.GetAxisRaw("Horizontal") > 0.5f || Input.GetAxisRaw("Horizontal") < -0.5f) /* f equals float */
             {
@@ -57,12 +63,31 @@ public class PlayerController : MonoBehaviour
             {
                 myRigidbody.velocity = new Vector2(myRigidbody.velocity.x,0f);
             }
+        if(Input.GetKeyDown(KeyCode.J))
+            {
+            attackTimeCounter = attackTime;
+            attacking = true;
+            myRigidbody.velocity = Vector2.zero;
+            anim.SetBool("Attack",true);
+            }
+            }
+        
+        
 
+        if(attackTimeCounter > 0)
+            {
+                attackTimeCounter -= Time.deltaTime;
+            }
+        if(attackTimeCounter<= 0)
+            {
+                attacking = false;
+                anim.SetBool("Attack",false);
+            }
 
             anim.SetFloat("MoveX",Input.GetAxisRaw("Horizontal"));
             anim.SetFloat("MoveY",Input.GetAxisRaw("Vertical"));
             anim.SetBool("PlayerMoving",playerMoving);
             anim.SetFloat("LastMoveX",lastMove.x);
-            anim.SetFloat("LastMoveY",lastMove.y);
+            anim.SetFloat("LastMoveY",lastMove.y);   
     }
 }
