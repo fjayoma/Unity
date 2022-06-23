@@ -26,6 +26,16 @@ public class PlayerController : MonoBehaviour
         anim = GetComponent<Animator>(); // first time the scene starts
         myRigidbody = GetComponent<Rigidbody2D>();
         myRigidbody.freezeRotation = true;
+
+        if(!playerExists) 
+        {
+            playerExists = true;
+            DontDestroyOnLoad(transform.gameObject);
+        } else {
+            Destroy (gameObject);
+        }
+        
+        
     }
 
     // Update is called once per frame
