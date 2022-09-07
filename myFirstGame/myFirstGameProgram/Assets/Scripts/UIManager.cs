@@ -12,6 +12,8 @@ public class UIManager : MonoBehaviour
     public PlayerHealthManager playerHealth;
     private static bool UIExists;
 
+    private PlayerStats thePS; //player stats
+    public Text levelText;
     
     
     // Start is called before the first frame update
@@ -25,6 +27,7 @@ public class UIManager : MonoBehaviour
             Destroy(gameObject);
         }    
 
+        thePS = GetComponent<PlayerStats>();
     }
 
     // Update is called once per frame
@@ -33,6 +36,9 @@ public class UIManager : MonoBehaviour
         healthBar.maxValue = playerHealth.playerMaxHealth;
         healthBar.value = playerHealth.playerCurrentHealth;
         HPText.text = "HP: " + playerHealth.playerCurrentHealth + "/" + playerHealth.playerMaxHealth;
+        levelText.text = "Current Level: " + thePS.currentLevel; 
+
+        
 
 
     }

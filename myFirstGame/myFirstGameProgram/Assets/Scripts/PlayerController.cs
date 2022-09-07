@@ -7,8 +7,10 @@ public class PlayerController : MonoBehaviour
 
 {
     public float moveSpeed;
-    public Rigidbody2D myRigidbody; //prevents player from bouncing against collision walls
+    private float currentMoveSpeed;
+    public float diagonalMoveModifier;
 
+    public Rigidbody2D myRigidbody; //prevents player from bouncing against collision wall
     private Animator anim; 
 
     private bool playerMoving;
@@ -19,6 +21,8 @@ public class PlayerController : MonoBehaviour
     private bool attacking; 
     public float attackTime;
     private float attackTimeCounter;
+
+    public string startPoint;
 
     // Start is called before the first frame update
     void Start()
@@ -47,9 +51,9 @@ public class PlayerController : MonoBehaviour
         if(!attacking)
             {
 
-        if(Input.GetAxisRaw("Horizontal") > 0.5f || Input.GetAxisRaw("Horizontal") < -0.5f) /* f equals float */
+          if(Input.GetAxisRaw("Horizontal") > 0.5f || Input.GetAxisRaw("Horizontal") < -0.5f) /* f equals float */
             {
-                myRigidbody.velocity = new Vector2(Input.GetAxisRaw("Horizontal")*moveSpeed,myRigidbody.velocity.y);
+                myRigidbody.velocity = new Vector2(Input.GetAxisRaw("Horizontal")*currentMoveSpeed,myRigidbody.velocity.y);
                 //transform.Translate(new Vector3(Input.GetAxisRaw("Horizontal") * moveSpeed * Time.deltaTime,0f,0f)); //move player around the world 
                 
                 playerMoving = true;
@@ -58,7 +62,7 @@ public class PlayerController : MonoBehaviour
         
          if(Input.GetAxisRaw("Vertical") > 0.5f || Input.GetAxisRaw("Vertical") < -0.5f) /* f equals float */
             {
-                myRigidbody.velocity = new Vector2(myRigidbody.velocity.x,Input.GetAxisRaw("Vertical")*moveSpeed);
+                myRigidbody.velocity = new Vector2(myRigidbody.velocity.x,Input.GetAxisRaw("Vertical")*currentMoveSpeed);
                 //transform.Translate(new Vector3(0f,Input.GetAxisRaw("Vertical") * moveSpeed * Time.deltaTime,0f)); /*x,y,z value*/
                 
                 playerMoving = true;
@@ -80,7 +84,16 @@ public class PlayerController : MonoBehaviour
             myRigidbody.velocity = Vector2.zero;
             anim.SetBool("Attack",true);
             }
+
+        if(Mathf.Abs(Input.GetAxisRaw("Horizontal")) > 0.5f && Mathf.Abs(Input.GetAxisRaw("Vertical")) > 0.5f)  // slows down diagnoal movment speed
+            {
+                currentMoveSpeed = moveSpeed*diagonalMoveModifier;
+            } else {
+                currentMoveSpeed = moveSpeed;
             }
+
+
+        }
         
         
 
